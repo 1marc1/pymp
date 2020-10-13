@@ -19,8 +19,6 @@ def MPFunction():
     result = pool.map(MPWorker, MyList)
     pool.terminate()
 
-    # Output of next line should be:
-    # Results: [['a1', 'a1'], ['b1', 'b1'], ['c1', 'c1']]
     print ('Results: ' + str(result))
 
 def MPWorker(MyListItem):

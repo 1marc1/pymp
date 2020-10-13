@@ -7,6 +7,23 @@
 
 # This file contains the main code.
 
+'''
+After running, the output on the screen should be:
+Results: [['a1', 'a1'], ['b1', 'b1'], ['c1', 'c1']]
+
+And the output in the pymp.log file (in the temporary directory) should be similar to:
+2020-10-13 23:25:06,732 pymp     INFO     MainProcess Starting pymp
+2020-10-13 23:25:06,732 pymp     INFO     MainProcess Starting MyFunction
+2020-10-13 23:25:06,732 pymp     INFO     MainProcess Starting Multiprocessing function
+2020-10-13 23:25:06,732 pymp     INFO     MainProcess Starting AuxFunction for MPFunction
+2020-10-13 23:25:06,746 pymp     INFO     ForkPoolWorker-2 MP Processing b
+2020-10-13 23:25:06,746 pymp     INFO     ForkPoolWorker-3 MP Processing c
+2020-10-13 23:25:06,747 pymp     INFO     ForkPoolWorker-2 Starting AuxFunction for b
+2020-10-13 23:25:06,747 pymp     INFO     ForkPoolWorker-3 Starting AuxFunction for c
+2020-10-13 23:25:06,746 pymp     INFO     ForkPoolWorker-1 MP Processing a
+2020-10-13 23:25:06,747 pymp     INFO     ForkPoolWorker-1 Starting AuxFunction for a
+'''
+
 import os
 import logging
 import logging.handlers
