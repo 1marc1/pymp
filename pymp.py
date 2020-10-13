@@ -24,7 +24,7 @@ def init_log():
     gv.logger.addHandler(file_handler)
 
 def MyFunction():
-    gv.logger.info('Started MyFunction')
+    gv.logger.info('Starting MyFunction')
     dc.MPFunction()
 
 if __name__ == "__main__":
