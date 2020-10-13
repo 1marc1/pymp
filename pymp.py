@@ -13,6 +13,7 @@ import logging.handlers
 import tempfile
 import multiprocessing
 import pymp_global as gv
+import pymp_common as dc
 
 def init_log():
     _logfile = os.path.join(tempfile.gettempdir(),gv.GeneralLogFileName)
@@ -23,7 +24,8 @@ def init_log():
     gv.logger.addHandler(file_handler)
 
 def MyFunction():
-    gv.logger.info('Info log from MyFunction')
+    gv.logger.info('Started MyFunction')
+    dc.MPFunction()
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()

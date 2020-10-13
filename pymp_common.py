@@ -7,8 +7,11 @@
 
 # This file contains common functions.
 
+import pymp_global as gv
+
 def MPFunction():
     gv.logger.info('Starting Multiprocessing function')
+    AuxFunction()
 
 def AuxFunction():
     gv.logger.info('Starting Auxiliary function')
