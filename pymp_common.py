@@ -6,3 +6,9 @@
 # * Can be frozen and still works in a Windows environment.
 
 # This file contains common functions.
+
+def MPFunction():
+    gv.logger.info('Starting Multiprocessing function')
+
+def AuxFunction():
+    gv.logger.info('Starting Auxiliary function')
