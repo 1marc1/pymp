@@ -10,5 +10,5 @@
 logger = None
 GeneralLogFileName = ''
 GeneralLogFormat = '%(asctime)s %(name)-8s %(levelname)-8s %(processName)-10s %(message)s'
-GeneralLogSize = 1000000
-GeneralLogCount = 8
+GeneralLogSize = 100000
+GeneralLogCount = 4
