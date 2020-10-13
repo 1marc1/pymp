@@ -25,9 +25,9 @@ And the output in the pymp.log file (in the temporary directory) should be simil
 '''
 
 import os
+import tempfile
 import logging
 import logging.handlers
-import tempfile
 import multiprocessing
 import pymp_global as gv
 import pymp_common as dc
