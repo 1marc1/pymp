@@ -44,6 +44,9 @@ def MyFunction():
     gv.logger.info('Starting MyFunction')
     dc.MPFunction()
 
+def logger_thread():
+    return
+
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     gv.GeneralLogFileName = 'pymp.log'
