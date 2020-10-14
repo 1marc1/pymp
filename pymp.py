@@ -34,8 +34,10 @@ import pymp_common as dc
 
 def listener_configurer():
     root = logging.getLogger()
-    h = logging.handlers.RotatingFileHandler('mptest.log', 'a', 300, 10)
-    f = logging.Formatter('%(asctime)s %(processName)-10s %(name)s %(levelname)-8s %(message)s')
+    #h = logging.handlers.RotatingFileHandler('mptest.log', 'a', 300, 10)
+    h = logging.handlers.RotatingFileHandler(gv.GeneralLogFileName, maxBytes=gv.GeneralLogSize, backupCount=gv.GeneralLogCount)
+    #f = logging.Formatter('%(asctime)s %(processName)-10s %(name)s %(levelname)-8s %(message)s')
+    f = logging.Formatter(gv.GeneralLogFormat)
     h.setFormatter(f)
     root.addHandler(h)
 
@@ -53,21 +55,37 @@ def listener_process(queue, configurer):
             print('Whoops! Problem:', file=sys.stderr)
             traceback.print_exc(file=sys.stderr)
 
-def init_log():
-    _logfile = os.path.join(tempfile.gettempdir(),gv.GeneralLogFileName)
-    gv.logger = logging.getLogger('pymp')
-    gv.logger.setLevel(logging.DEBUG)
-    file_handler = logging.handlers.RotatingFileHandler(_logfile, maxBytes=gv.GeneralLogSize, backupCount=gv.GeneralLogCount)
-    file_handler.setFormatter(logging.Formatter(gv.GeneralLogFormat))
-    gv.logger.addHandler(file_handler)
+def worker_configurer(queue):
+    h = logging.handlers.QueueHandler(queue)  # Just the one handler needed
+    root = logging.getLogger()
+    root.addHandler(h)
+    # send all messages, for demo; no other level or filter logic applied.
+    root.setLevel(logging.DEBUG)
 
-def MyFunction():
-    gv.logger.info('Starting MyFunction')
-    dc.MPFunction()
+def main():
+    queue = multiprocessing.Queue(-1)
+    listener = multiprocessing.Process(target=listener_process,
+                                       args=(queue, listener_configurer))
+    listener.start()
+
+    #logger = logging.getLogger('test')
+    #logger.info('Starting pymp')
+    MyFunction(queue, worker_configurer)
+
+    queue.put_nowait(None)
+    listener.join()
+
+
+def MyFunction(queue, configurer):
+    configurer(queue)
+    logger = logging.getLogger('test')
+    logger.info('Starting MyFunction')
+    #dc.MPFunction()
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     gv.GeneralLogFileName = 'pymp.log'
-    init_log()
-    gv.logger.info('Starting pymp')
-    MyFunction()
+    main()
+
+
+
