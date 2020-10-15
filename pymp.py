@@ -26,11 +26,19 @@ And the output in the pymp.log file (in the temporary directory) should be simil
 
 import os
 import tempfile
-import logging
-import logging.handlers
 import multiprocessing
 import pymp_global as gv
 import pymp_common as dc
+from logging import getLogger
+from logger_tt import setup_logging
+
+_logfile = os.path.join(tempfile.gettempdir(),'pymp.log')
+
+setup_logging(config_path='log_config.json',
+              log_path=_logfile,
+              use_multiprocessing=True)
+
+logger = getLogger(__name__)
 
 def init_log():
     _logfile = os.path.join(tempfile.gettempdir(),gv.GeneralLogFileName)
@@ -41,12 +49,10 @@ def init_log():
     gv.logger.addHandler(file_handler)
 
 def MyFunction():
-    gv.logger.info('Starting MyFunction')
+    logger.info('Starting MyFunction')
     dc.MPFunction()
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
-    gv.GeneralLogFileName = 'pymp.log'
-    init_log()
-    gv.logger.info('Starting pymp')
+    logger.info('Starting pymp')
     MyFunction()
